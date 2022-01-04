@@ -39,88 +39,94 @@ layout: PostLayout
 
 - _launch.json_
 
-        {
-            "version": "0.2.0",
-            "configurations": [
+  ```
+  {
+      "version": "0.2.0",
+      "configurations": [
 
-                {
-                    "name": "(gdb) Launch",
-                    "type": "cppdbg",
-                    "request": "launch",
-                    "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
-                    "args": [],
-                    "stopAtEntry": false,
-                    "cwd": "${workspaceFolder}",
-                    "environment": [],
-                    "externalConsole": true,
-                    "internalConsoleOptions": "neverOpen",
-                    "MIMode": "gdb",
-                    "miDebuggerPath": "gdb.exe",
-                    "setupCommands": [
-                        {
-                            "description": "Enable pretty-printing for gdb",
-                            "text": "-enable-pretty-printing",
-                            "ignoreFailures": false
-                        }
-                    ],
-                    "preLaunchTask": "Compile",
-                }
-            ]
-        }
+          {
+              "name": "(gdb) Launch",
+              "type": "cppdbg",
+              "request": "launch",
+              "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
+              "args": [],
+              "stopAtEntry": false,
+              "cwd": "${workspaceFolder}",
+              "environment": [],
+              "externalConsole": true,
+              "internalConsoleOptions": "neverOpen",
+              "MIMode": "gdb",
+              "miDebuggerPath": "gdb.exe",
+              "setupCommands": [
+                  {
+                      "description": "Enable pretty-printing for gdb",
+                      "text": "-enable-pretty-printing",
+                      "ignoreFailures": false
+                  }
+              ],
+              "preLaunchTask": "Compile",
+          }
+      ]
+  }
+  ```
 
 - _tasks.json_
 
-        {
-            "version": "2.0.0",
-            "tasks": [
-                {
-                    "label": "Compile",
-                    "command": "g++",
-                    "args": [
-                        "${file}",
-                        "-o",
-                        "${fileDirname}/${fileBasenameNoExtension}.exe",
-                        "-g",
-                        "-Wall",
-                        "-static-libgcc",
-                        "-fexec-charset=GBK"
-                    ],
-                    "type": "process",
-                    "group": {
-                        "kind": "build",
-                        "isDefault": true
-                    },
-                    "presentation": {
-                        "echo": true,
-                        "reveal": "always",
-                        "focus": false,
-                        "panel": "shared",
-                    },
-                }
-            ]
-        }
+  ```
+  {
+      "version": "2.0.0",
+      "tasks": [
+          {
+              "label": "Compile",
+              "command": "g++",
+              "args": [
+                  "${file}",
+                  "-o",
+                  "${fileDirname}/${fileBasenameNoExtension}.exe",
+                  "-g",
+                  "-Wall",
+                  "-static-libgcc",
+                  "-fexec-charset=GBK"
+              ],
+              "type": "process",
+              "group": {
+                  "kind": "build",
+                  "isDefault": true
+              },
+              "presentation": {
+                  "echo": true,
+                  "reveal": "always",
+                  "focus": false,
+                  "panel": "shared",
+              },
+          }
+      ]
+  }
+  ```
 
 - _setting.json_ (部分)
 
-        {
-            ...
-            "files.defaultLanguage": "cpp",
-            "editor.formatOnType": true,
-            "editor.suggest.snippetsPreventQuickSuggestions": false,
-            "editor.acceptSuggestionOnEnter": "off",
-            "editor.snippetSuggestions": "top",
-            "code-runner.runInTerminal": true,
-            "code-runner.executorMap": {
-                "c": "cd $dir && gcc '$fileName' -o '$fileNameWithoutExt.exe' -Wall -g -O2 -static-libgcc -std=c11 -fexec-charset=GBK && &'$dir$fileNameWithoutExt'",
-                "cpp": "cd $dir && g++ '$fileName' -o '$fileNameWithoutExt.exe' -Wall -g -O2 -static-libgcc -std=c++17 -fexec-charset=GBK && &'$dir$fileNameWithoutExt'"
-            },
-            "code-runner.saveFileBeforeRun": true,
-            "code-runner.preserveFocus": true,
-            "code-runner.clearPreviousOutput": false,
-            "code-runner.ignoreSelection": true,
-            "C_Cpp.clang_format_sortIncludes": true,
-            ...
-        }
+  ```
+  {
+      ...
+      "files.defaultLanguage": "cpp",
+      "editor.formatOnType": true,
+      "editor.suggest.snippetsPreventQuickSuggestions": false,
+      "editor.acceptSuggestionOnEnter": "off",
+      "editor.snippetSuggestions": "top",
+      "code-runner.runInTerminal": true,
+      "code-runner.executorMap": {
+          "c": "cd $dir && gcc '$fileName' -o '$fileNameWithoutExt.exe' -Wall -g -O2 -static-libgcc -std=c11 -fexec-charset=GBK && &'$dir$fileNameWithoutExt'",
+          "cpp": "cd $dir && g++ '$fileName' -o '$fileNameWithoutExt.exe' -Wall -g -O2 -static-libgcc -std=c++17 -fexec-charset=GBK && &'$dir$fileNameWithoutExt'"
+      },
+      "code-runner.saveFileBeforeRun": true,
+      "code-runner.preserveFocus": true,
+      "code-runner.clearPreviousOutput": false,
+      "code-runner.ignoreSelection": true,
+      "C_Cpp.clang_format_sortIncludes": true,
+      ...
+  }
+  ```
 
 ## 4. 用 vscode 进行 cpp 调试
 
@@ -128,16 +134,18 @@ layout: PostLayout
 2.在`vscode`下`Ctrl+K`、`Ctrl+O`，打开`cpp`文件夹。  
 3.`Ctrl+N`创建新文件，随便写个 cpp demo:
 
-    #include <iostream>
-    using namespace std;
+```cpp
+#include <iostream>
+using namespace std;
 
-    int main()
-    {
-        cout << "hello world" << endl;
-        int a;
-        cin >> a;
-        return 0;
-    }
+int main()
+{
+    cout << "hello world" << endl;
+    int a;
+    cin >> a;
+    return 0;
+}
+```
 
 4.`Shift+Ctrl+B`进行编译；`F5`进行调试，会弹出命令行窗口显示`hello world`输出。至此完成所有设置。
 

@@ -126,19 +126,21 @@ layout: PostLayout
 
 输入以下内容
 
-    server {
+```
+server {
 
-    	listen 80;
-    	server_name yourdomain.com;
+    listen 80;
+    server_name yourdomain.com;
 
-    	location /static/ {
-    		root /home/mysite;
-    		}
-    	location / {
-    		include         uwsgi_params;
-    		uwsgi_pass      unix:/home/mysite/mysite.sock;
-    		}
-    	}
+    location /static/ {
+        root /home/mysite;
+        }
+    location / {
+        include         uwsgi_params;
+        uwsgi_pass      unix:/home/mysite/mysite.sock;
+        }
+    }
+```
 
 其中`yourdomain.com`改成自己的域名(假设已经完成解析设置)
 

@@ -10,24 +10,6 @@ authors: ['default']
 layout: PostLayout
 ---
 
-<!--Format:
-##
-* **Description**:
-  *
-* **Analysis**:
-  *
-  * 时间复杂度：$O()$
-  * 空间复杂度：$O()$
-* **Analysis**:
-    ```cpp
-    // Runtime:  ms, beats  %
-    // Memory:  MB, beats  %
-    code here
-    ```
-
----
--->
-
 ## 0. Preface
 
 - 刷`Leetcode`过程中记录所做过题目的答案，偏向归档属性。
@@ -368,6 +350,7 @@ layout: PostLayout
   - 时间复杂度：$O(n)$
   - 空间复杂度：$O(1)$
 - **Solution**:
+
   ```cpp
   // Runtime: 8 ms, beats 99.69 %
   // Memory Usage: 8.4 MB, beats 100.00 %
@@ -734,6 +717,7 @@ layout: PostLayout
   - 时间复杂度：$O(n^{2})$
   - 空间复杂度：$O(1)$
 - **Analysis**:
+
   ```cpp
   // Runtime: 96 ms, beats 98.42 %
   // Memory: 14.7 MB, beats 99.30 %
@@ -784,6 +768,7 @@ layout: PostLayout
   - 时间复杂度：$O(n^{2})$
   - 空间复杂度：$O(1)$
 - **Analysis**:
+
   ```cpp
   // Runtime: 8 ms, beats  99.98 %
   // Memory: 8.5 MB, beats 100 %
@@ -892,6 +877,7 @@ layout: PostLayout
   - 时间复杂度：$O(n^{3})$
   - 空间复杂度：$O(1)$
 - **Analysis**:
+
   ```cpp
   // Runtime: 8 ms, beats 99.87 %
   // Memory: 9.2 MB, beats 76.04 %
@@ -977,6 +963,7 @@ layout: PostLayout
   - 时间复杂度：$O(n)$
   - 空间复杂度：$O(n)$
 - **Analysis**:
+
   ```cpp
   // Runtime: 0 ms, beats 100.00 %
   // Memory: 8.7 MB, beats 55.72 %
