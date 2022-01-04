@@ -1,3 +1,15 @@
+---
+title: '进化算法基础'
+date: '2021-02-02'
+# lastmode: ''
+tags: ['deep learning']
+draft: true
+summary: '进化算法基础'
+# images: ['']
+authors: ['default']
+layout: PostLayout
+---
+
 ## 编码
 
 - 二进制编码

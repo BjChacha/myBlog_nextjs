@@ -1,11 +1,13 @@
 ---
-title: 'ALGO->编辑距离问题'
-description: 'LeetCode 72. Edit Distance'
-toc: false
-comments: true
-layout: post
-categories: [algorithm, leetcode, dp]
-author: BjChacha
+title: '[LeetCode]编辑距离问题'
+date: '2020-03-17'
+# lastmode: '2022-01-04'
+tags: ['log', 'algorithm']
+# draft: true
+summary: 'LeetCode 72. Edit Distance'
+# images: ['']
+authors: ['default']
+layout: PostLayout
 ---
 
 ## 0. 前言

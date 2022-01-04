@@ -1,11 +1,13 @@
 ---
-title: 'LOG->在WSL中安装MacOS虚拟机'
-description: '圆了我的苹果梦（没有'
-toc: true
-hide: false
-layout: post
-categories: [log, wsl]
-author: BjChacha
+title: '在WSL中安装MacOS虚拟机'
+date: '2020-05-27'
+# lastmode: '2022-01-04'
+tags: ['log', 'wsl']
+# draft: true
+summary: '圆了我的苹果梦（没有'
+# images: ['']
+authors: ['default']
+layout: PostLayout
 ---
 
 ## 0. 前言

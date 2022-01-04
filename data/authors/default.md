@@ -1,6 +1,6 @@
 ---
 name: BjChacha
-avatar: /static/images/avatar.png
+avatar: /static/images/my_avatar.png
 occupation: Postgraduate
 company: Shenzhen University
 # email: addres@yoursite.com

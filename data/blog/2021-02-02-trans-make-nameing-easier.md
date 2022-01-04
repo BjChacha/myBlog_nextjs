@@ -1,11 +1,13 @@
 ---
-title: 'TRANS->让命名简单点'
-description: '起名字是一门艺术，不管在编程还是生活。'
-toc: true
-hide: false
-layout: post
-categories: [translations, common]
-author: Artem Zakharchenko
+title: '让命名简单点'
+date: '2021-02-02'
+# lastmode: '2022-01-04'
+tags: ['repost', 'translations', 'programming']
+# draft: true
+summary: '起名字是一门艺术，不管在编程还是生活。'
+# images: ['']
+authors: ['artemzakharchenko']
+layout: PostLayout
 ---
 
 在编程工作中，规范统一的命名规则不仅方便协同合作，也会方便回顾自己的个人代码。网上有许多关于代码命名规范的说明，比如[《Google 开源项目风格指南》](https://zh-google-styleguide.readthedocs.io/en/latest/contents/)。本文着重讲的是关于命名内容的一些规范。

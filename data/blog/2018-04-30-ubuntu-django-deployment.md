@@ -1,11 +1,13 @@
 ---
-title: 'LOG->在Ubuntu快速部署Django'
-description: '开发5分钟，部署2小时'
-toc: false
-layout: post
-categories: [log, django]
-image: images/posts/2018-04-30-ubuntu-django-deployment/django_logo.png
-author: BjChacha
+title: '在Ubuntu快速部署Django'
+date: '2018-04-30'
+# lastmode: '2022-01-04'
+tags: ['log', 'django']
+# draft: true
+summary: '开发5分钟，部署2小时'
+# images: ['']
+authors: ['default']
+layout: PostLayout
 ---
 
 ## 配置环境

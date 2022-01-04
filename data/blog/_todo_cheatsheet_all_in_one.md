@@ -1,11 +1,13 @@
 ---
 title: '终极CheatSheet系列'
-description: '我受够了反反复复查同一个指令'
-toc: false
-comments: true
-layout: post
-categories: [cheatsheet]
-author: BjChacha
+date: '2020-11-10'
+# lastmode: '2022-01-04'
+tags: ['cheatsheet']
+draft: true
+summary: '受够了反反复复地上查网同一个指令'
+# images: ['']
+authors: ['default']
+layout: PostLayout
 ---
 
 ## Linux(Ubuntu)

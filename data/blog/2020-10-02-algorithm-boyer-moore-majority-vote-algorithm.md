@@ -1,11 +1,13 @@
 ---
-title: 'ALGO->波义尔摩尔投票算法'
-description: 'LeetCode 169. Majority Element'
-toc: true
-comments: true
-layout: post
-categories: [algorithm, leetcode]
-author: BjChacha
+title: '[LeetCode]波义尔摩尔投票算法'
+date: '2020-10-02'
+# lastmode: '2022-01-04'
+tags: ['log', 'algorithm']
+# draft: true
+summary: 'LeetCode 169. Majority Element'
+# images: ['']
+authors: ['default']
+layout: PostLayout
 ---
 
 ## 1. 简介

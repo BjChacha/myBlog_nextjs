@@ -1,10 +1,13 @@
 ---
-title: 'MEMO->Windows 个人向软件收藏集'
-description: '不定期诈尸'
-toc: true
-layout: post
-categories: [software, memo]
-author: BjChacha
+title: 'Windows 个人向软件收藏集'
+date: '2018-04-30'
+# lastmode: '2022-01-04'
+tags: ['log', 'software']
+# draft: true
+summary: '根据个人实际情况不定期更新……'
+# images: ['']
+authors: ['default']
+layout: PostLayout
 ---
 
 ## [Sumatra PDF](https://www.sumatrapdfreader.org/free-pdf-reader.html)

@@ -1,11 +1,13 @@
 ---
-title: 'TRANS->深度学习中的那些重要想法——历史简要回顾'
-description: '回顾深度学习中经住时间考验的想法，涵盖大量理解现代深度学习研究的必要知识。如果刚入门深度学习，这是个不错的起点。'
-toc: true
-hide: false
-layout: post
-categories: [translations, deeplearning]
-author: Denny Britz
+title: '深度学习中的那些重要想法——历史简要回顾'
+date: '2020-08-13'
+# lastmode: '2022-01-04'
+tags: ['repost', 'translation', 'deeplearning']
+# draft: true
+summary: '回顾深度学习中经住时间考验的想法，涵盖大量理解现代深度学习研究的必要知识。如果刚入门深度学习，这是个不错的起点。'
+# images: ['']
+authors: ['dennybritz']
+layout: PostLayout
 ---
 
 翻译自[原文](https://dennybritz.com/blog/deep-learning-most-important-ideas/)

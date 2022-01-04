@@ -1,11 +1,13 @@
 ---
-title: 'ALGO->01背包问题'
-description: '动态规划'
-toc: false
-comments: true
-layout: post
-categories: [algorithm, dp]
-author: BjChacha
+title: '[LeetCode]01背包问题'
+date: '2020-03-20'
+# lastmode: '2022-01-04'
+tags: ['log', 'algorithm']
+# draft: true
+summary: '经典动态规划问题'
+# images: ['']
+authors: ['default']
+layout: PostLayout
 ---
 
 ## 1. 问题描述

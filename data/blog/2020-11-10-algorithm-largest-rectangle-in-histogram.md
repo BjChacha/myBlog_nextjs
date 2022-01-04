@@ -1,11 +1,13 @@
 ---
-title: 'ALGO->柱状图中最大的矩形'
-description: 'LeetCode 84. Largest Rectangle in Histogram'
-toc: true
-comments: true
-layout: post
-categories: [algorithm, leetcode, stack, div&conq]
-author: BjChacha
+title: '[LeetCode]柱状图中最大的矩形'
+date: '2020-11-10'
+# lastmode: '2022-01-04'
+tags: ['log', 'algorithm']
+# draft: true
+summary: 'LeetCode 84. Largest Rectangle in Histogram'
+# images: ['']
+authors: ['default']
+layout: PostLayout
 ---
 
 ## 1. 问题描述

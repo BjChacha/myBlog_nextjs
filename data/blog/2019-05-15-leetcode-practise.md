@@ -1,10 +1,13 @@
 ---
-title: LeetCode 刷题总结
-description: 算法深似海，是祸躲不过
-toc: false
-hide: true
-categories: [algorithm]
-author: BjChacha
+title: 'LeetCode 刷题个人总结'
+date: '2019-05-15'
+# lastmode: '2022-01-04'
+tags: ['log', 'algorithm']
+draft: true
+summary: '算法深似海，是祸躲不过'
+# images: ['']
+authors: ['default']
+layout: PostLayout
 ---
 
 <!--Format:

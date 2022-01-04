@@ -1,10 +1,13 @@
 ---
-title: 'LOG->VSCode用于cpp调试的相关设置'
-description: '妈妈再也不用担心我没空间装Visual Studio啦~'
-toc: false
-layout: post
-categories: [log, vscode]
-author: BjChacha
+title: 'VSCode C++设置'
+date: '2020-01-28'
+# lastmode: '2022-01-04'
+tags: ['log', 'vscode']
+# draft: true
+summary: '妈妈再也不用担心我没空间装Visual Studio啦~'
+# images: ['']
+authors: ['default']
+layout: PostLayout
 ---
 
 ## 0. 前言
