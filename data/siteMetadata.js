@@ -1,5 +1,5 @@
 const siteMetadata = {
-  title: 'Chacha\'s Blog',
+  title: "Chacha's Blog",
   author: 'BjChacha',
   headerTitle: 'BjChacha Blog',
   description: 'Learning, thinking and sharing',
@@ -7,9 +7,9 @@ const siteMetadata = {
   theme: 'system', // system, dark or light
   siteUrl: 'https://www.bjxx.me/',
   siteRepo: 'https://github.com/BjChacha/myblog_nextjs',
-  siteLogo: '/static/images/logo.png',
-  image: '/static/images/avatar.png',
-  socialBanner: '/static/images/twitter-card.png',
+  siteLogo: '/static/images/my_favicon.png',
+  image: '/static/images/my_avatar.png',
+  // socialBanner: '/static/images/twitter-card.png',
   // email: 'bjchacha@outlook.com',
   github: 'https://github.com/BjChacha',
   // twitter: 'https://twitter.com/Twitter',
