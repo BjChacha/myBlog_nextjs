@@ -3,7 +3,7 @@ title: '将Neovim打磨成前端开发利器'
 date: '2022-10-06'
 # lastmode: '2022-10-06'
 tags: ['log', 'vim', 'frontend']
-draft: true
+draft: false
 summary: '抛开鼠标的束缚，让双手在键盘上灵动飞舞，愉快地装X（'
 # images: ['']
 authors: ['default']
