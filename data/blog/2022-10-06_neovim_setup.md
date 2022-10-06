@@ -21,11 +21,11 @@ layout: PostLayout
 
 ## 0.Structure
 
-nvim
-├─ _after_
-│ └─ _plugin_ 插件配置文件
-├─ _lua_ lua 脚本
-├─ _plugin_ 会被 Neovim 自动加载
+nvim  
+├─ _after_  
+│ └─ _plugin_ 插件配置文件  
+├─ _lua_ lua 脚本  
+├─ _plugin_ 会被 Neovim 自动加载  
 └─ init.lua 初始配置文件
 
 ## 1. Base Configuration
@@ -833,7 +833,7 @@ null_ls.setup ({
 
 ### after/plugin/prettier.rc.lua: 代码格式化
 
-- 事先手动安装[prettierd](phttps://github.com/fsouza/prettier)
+- 事先手动安装[prettierd](https://github.com/fsouza/prettierd)
 
 ```lua
 local status, prettier = pcall(require, "prettier")
