@@ -1,13 +1,13 @@
 ---
-title: '如何学习系列 - 如何记忆知识'
-date: 'dbt'
+# title: '如何学习系列 - 如何记忆知识'
+# date: '2022-10-06'
 # lastmode: '2022-01-04'
-tags: ['blog', 'life', 'learning']
+# tags: ['blog', 'life', 'learning']
 draft: true
-summary: '与其抱怨自己没天赋，不如停下思考为什么'
+# summary: '与其抱怨自己没天赋，不如停下思考为什么'
 # images: ['']
-authors: ['BjChacha']
-layout: PostLayout
+# authors: ['BjChacha']
+# layout: PostLayout
 ---
 
 # 如何学习 - 如何记忆知识
