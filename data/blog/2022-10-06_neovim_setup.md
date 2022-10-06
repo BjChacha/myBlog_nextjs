@@ -22,12 +22,11 @@ layout: PostLayout
 ## 0.Structure
 
 nvim
-
-- after
-  - plugin 插件配置文件
-- lua lua 脚本
-- plugin 会被 Neovim 自动加载
-- _init.lua_ 初始配置文件
+├─ _after_
+│ └─ _plugin_ 插件配置文件
+├─ _lua_ lua 脚本
+├─ _plugin_ 会被 Neovim 自动加载
+└─ init.lua 初始配置文件
 
 ## 1. Base Configuration
 
@@ -280,59 +279,624 @@ end)
 
 ## 2. Plugins
 
-- Neosolarized: 颜色主题管理插件
+- 如果没有标注特定配置，则相应的配置文件只需普通`setup`即可。
+- 所有的配置文件都已托管至[Github](https://github.com/BjChacha/myConfigs/tree/main/nvim)
 
-- Lualine: 状态栏自定义插件
+### /after/plugin/neosolarized.rc.lua: 颜色主题管理插件
 
-- Lspconfig: 方便地配置 Neovim 内置的 LSP 系统
+```lua
+local status, n = pcall(require, "neosolarized")
+if (not status) then return end
 
-- Autotag: 自动补全 html 标签
+n.setup({
+  comment_italics = true,
+})
 
-- Autopairs: 自动补全括号
+local cb = require('colorbuddy.init')
+local Color = cb.Color
+local colors = cb.colors
+local Group = cb.Group
+local groups = cb.groups
+local styles = cb.styles
 
-- Telescope: 模糊文件查找(可以手动安装[ripgrep](https://github.com/BurntSushi/ripgrep)来提高搜索效率)
+Color.new('black', '#000000')
+Group.new('CursorLine', colors.none, colors.base03, styles.NONE, colors.base1)
+Group.new('CursorLineNr', colors.yellow, colors.black, styles.NONE, colors.base1)
+Group.new('Visual', colors.none, colors.base03, styles.reverse)
 
-  - `;f`: 查找文件
-  - `;r`: 实时查找
-  - `\\`: 缓存区查找
-  - `;t`: 标签帮助
-  - `;;`: 恢复上一次操作
-  - `;e`: 显示提示
-  - `sf`: 启用文件浏览器
-    - `N`: 创建文件
-    - `h`: 返回上一级
-    - `/`: 查找模式
+local cError = groups.Error.fg
+local cInfo = groups.Information.fg
+local cWarn = groups.Warning.fg
+local cHint = groups.Hint.fg
 
-- Bufferline: 更好看的标签栏
+Group.new("DiagnosticVirtualTextError", cError, cError:dark():dark():dark():dark(), styles.NONE)
+Group.new("DiagnosticVirtualTextInfo", cInfo, cInfo:dark():dark():dark(), styles.NONE)
+Group.new("DiagnosticVirtualTextWarn", cWarn, cWarn:dark():dark():dark(), styles.NONE)
+Group.new("DiagnosticVirtualTextHint", cHint, cHint:dark():dark():dark(), styles.NONE)
+Group.new("DiagnosticUnderlineError", colors.none, colors.none, styles.undercurl, cError)
+Group.new("DiagnosticUnderlineWarn", colors.none, colors.none, styles.undercurl, cWarn)
+Group.new("DiagnosticUnderlineInfo", colors.none, colors.none, styles.undercurl, cInfo)
+Group.new("DiagnosticUnderlineHint", colors.none, colors.none, styles.undercurl, cHint)
+```
 
-- Lspsaga: LSP UI
+### /after/plugin/lualine.rc.lua: 状态栏自定义插件
 
-  - `Ctrl+j`: 跳转到提示处
-  - `K`: 显示浮动文档
-  - `gd`: 查找定义
-  - `gp`: 预览定义
-  - `gr`: 变量重命名
+```lua
+local status, lualine = pcall(require, "lualine")
+if (not status) then return end
 
-- null-ls: 使用 Neovim 作为语言服务器，通过 Lua 注入 LSP 诊断、代码操作等
+lualine.setup {
+  options = {
+    icons_enabled = true,
+    theme = 'solarized_dark',
+    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
+    disabled_filetypes = {}
+  },
+  sections = {
+    lualine_a = { 'mode' },
+    lualine_b = { 'branch' },
+    lualine_c = { {
+      'filename',
+      file_status = true, -- displays file status (readonly status, modified status)
+      path = 0 -- 0 = just filename, 1 = relative path, 2 = absolute path
+    } },
+    lualine_x = {
+      { 'diagnostics', sources = { "nvim_diagnostic" }, symbols = { error = ' ', warn = ' ', info = ' ',
+        hint = ' ' } },
+      'encoding',
+      'filetype'
+    },
+    lualine_y = { 'progress' },
+    lualine_z = { 'location' }
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = { {
+      'filename',
+      file_status = true, -- displays file status (readonly status, modified status)
+      path = 1 -- 0 = just filename, 1 = relative path, 2 = absolute path
+    } },
+    lualine_x = { 'location' },
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  extensions = { 'fugitive' }
+}
+```
 
-  - 事先手动安装[eslint_d](https://github.com/mantoni/eslint_d.js)
+### /plugin/lspconfig.rc.lua: 方便地配置 Neovim 内置的 LSP 系统
 
-- Prettier: 代码格式化
+```lua
+local status, nvim_lsp = pcall(require, "lspconfig")
+if (not status) then return end
 
-  - 事先手动安装[prettierd](phttps://github.com/fsouza/prettier)
+local protocol = require('vim.lsp.protocol')
 
-- gitsigns: 在缓冲区显示哪些行被修改
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 
-- git: git 相关功能
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-- mason: 便携的 Neovim 包管理，管理 Lsp，还为 Lsp 提供额外的特定语言支持（比如 TailwindCSS）
+  --Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  - mason-lspconfig: mason 专属的 lsp 快捷配置
+  -- Mappings.
+  local opts = { noremap = true, silent = true }
 
-- nvim-comment: 快捷注释
-  - `gcc`: 注释当前行
-  - `gc`: 可视模式下注释所选内容所在行
-  - `gc{count}{motion}`：通用模式，如
-    - `gcip`: 注释整段 -`gc4j`: 注释下面 4 行
-- nvim-colorizer: RGB 预览
-  - 需要用命令启用`:ColorizerToggle`
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  --buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  --buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+end
+
+protocol.CompletionItemKind = {
+  '', -- Text
+  '', -- Method
+  '', -- Function
+  '', -- Constructor
+  '', -- Field
+  '', -- Variable
+  '', -- Class
+  'ﰮ', -- Interface
+  '', -- Module
+  '', -- Property
+  '', -- Unit
+  '', -- Value
+  '', -- Enum
+  '', -- Keyword
+  '﬌', -- Snippet
+  '', -- Color
+  '', -- File
+  '', -- Reference
+  '', -- Folder
+  '', -- EnumMember
+  '', -- Constant
+  '', -- Struct
+  '', -- Event
+  'ﬦ', -- Operator
+  '', -- TypeParameter
+}
+
+-- Set up completion using nvim_cmp with LSP source
+local capabilities = require('cmp_nvim_lsp').update_capabilities(
+  vim.lsp.protocol.make_client_capabilities()
+)
+
+nvim_lsp.flow.setup {
+  on_attach = on_attach,
+  capabilities = capabilities
+}
+
+nvim_lsp.tsserver.setup {
+  on_attach = on_attach,
+  filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript", "javascriptreact" },
+--  cmd = { "typescript-language-server", "--stdio" },
+  capabilities = capabilities
+}
+
+nvim_lsp.sourcekit.setup {
+  on_attach = on_attach,
+}
+
+nvim_lsp.sumneko_lua.setup {
+  on_attach = on_attach,
+  settings = {
+    Lua = {
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { 'vim' },
+      },
+
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false
+      },
+    },
+  },
+}
+
+nvim_lsp.tailwindcss.setup {}
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = true,
+    update_in_insert = false,
+    virtual_text = { spacing = 4, prefix = "●" },
+    severity_sort = true,
+  }
+)
+
+-- Diagnostic symbols in the sign column (gutter)
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
+
+vim.diagnostic.config({
+  virtual_text = {
+    prefix = '●'
+  },
+  update_in_insert = true,
+  float = {
+    source = "always", -- Or "if_many"
+  },
+})
+```
+
+### /after/plugin/lspkind.rc.lua: 类 VSCode 的图表显示
+
+```lua
+require('lspkind').init({
+  -- DEPRECATED (use mode instead): enables text annotations
+  --
+  -- default: true
+  -- with_text = true,
+
+  -- defines how annotations are shown
+  -- default: symbol
+  -- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
+  mode = 'symbol_text',
+
+  -- default symbol map
+  -- can be either 'default' (requires nerd-fonts font) or
+  -- 'codicons' for codicon preset (requires vscode-codicons font)
+  --
+  -- default: 'default'
+  preset = 'codicons',
+
+  -- override preset symbols
+  --
+  -- default: {}
+  symbol_map = {
+    Text = "",
+    Method = "",
+    Function = "",
+    Constructor = "",
+    Field = "ﰠ",
+    Variable = "",
+    Class = "ﴯ",
+    Interface = "",
+    Module = "",
+    Property = "ﰠ",
+    Unit = "塞",
+    Value = "",
+    Enum = "",
+    Keyword = "",
+    Snippet = "",
+    Color = "",
+    File = "",
+    Reference = "",
+    Folder = "",
+    EnumMember = "",
+    Constant = "",
+    Struct = "פּ",
+    Event = "",
+    Operator = "",
+    TypeParameter = ""
+  },
+})
+```
+
+### /after/plugin/cmp.rc.lua: 自动补全系统
+
+- cmp-buffer
+- cmp-nvim-lsp
+
+```lua
+local status, cmp = pcall(require, "cmp")
+if (not status) then return end
+local lspkind = require 'lspkind'
+
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<Tab>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true
+    }),
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'buffer' },
+  }),
+  formatting = {
+    format = lspkind.cmp_format({ with_text = false, maxwidth = 50 })
+  }
+})
+
+vim.cmd [[
+  set completeopt=menuone,noinsert,noselect
+  highlight! default link CmpItemKind CmpItemMenuDefault
+]]
+```
+
+### after/plugin/treesitter.rc.lua: 增量解析系统
+
+```lua
+local status, ts = pcall(require, "nvim-treesitter.configs")
+if (not status) then return end
+
+ts.setup {
+  highlight = {
+    enable = true,
+    disable = {},
+  },
+  indent = {
+    enable = true,
+    disable = {},
+  },
+  ensure_installed = {
+    "tsx",
+    "toml",
+    "fish",
+    "php",
+    "json",
+    "yaml",
+    "swift",
+    "css",
+    "html",
+    "lua"
+  },
+  autotag = {
+    enable = true,
+  },
+}
+
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
+```
+
+### after/plugin/ts-autotag.rc.lua: 自动补全 html 标签
+
+### after/plugin/autopairs.rc.lua: 自动补全括号
+
+```lua
+local status, autopairs = pcall(require, "nvim-autopairs")
+if (not status) then return end
+
+autopairs.setup({
+  disable_filetype = { "TelescopPrompt", "vim" },
+})
+```
+
+### after/plugin/telescope.rc.lua: 模糊文件查找(可以手动安装[ripgrep](https://github.com/BurntSushi/ripgrep)来提高搜索效率)
+
+- `;f`: 查找文件
+- `;r`: 实时查找
+- `\\`: 缓存区查找
+- `;t`: 标签帮助
+- `;;`: 恢复上一次操作
+- `;e`: 显示提示
+- `sf`: 启用文件浏览器
+  - `N`: 创建文件
+  - `h`: 返回上一级
+  - `/`: 查找模式
+
+```lua
+local status, telescope = pcall(require, "telescope")
+if (not status) then return end
+local actions = require('telescope.actions')
+local builtin = require('telescope.builtin')
+
+local function telescope_buffer_dir()
+  return vim.fn.expand('%:p:h')
+end
+
+local fb_actions = require "telescope".extensions.file_browser.actions
+
+telescope.setup {
+  defaults = {
+    mappings = {
+      n = {
+        ["q"] = actions.close
+      },
+    },
+  },
+  extensions = {
+    file_browser = {
+      theme = 'dropdown',
+      hijack_netrw = true,
+      mappings = {
+        ["i"] = {
+          ["<C-w>"] = function() vim.cmd('normal vbd') end, -- 清空输入
+        },
+        ["n"] = {
+          ["N"] = fb_actions.create,
+          ["h"] = fb_actions.goto_parent_dir,
+          ["/"] = function()
+            vim.cmd('startinsert')
+          end
+        },
+      },
+    },
+  },
+}
+
+telescope.load_extension("file_browser")
+
+vim.keymap.set('n', ';f',
+  function()
+    builtin.find_files({
+      no_ignore = false,
+      hidden = true
+    })
+  end)
+
+vim.keymap.set('n', ';r', function()
+  builtin.live_grep()
+end)
+
+vim.keymap.set('n', '\\\\', function()
+  builtin.buffers()
+end)
+
+vim.keymap.set('n', ';t', function()
+  builtin.help_tags()
+end)
+
+vim.keymap.set('n', ';;', function()
+  builtin.resume()
+end)
+
+vim.keymap.set('n', ';e', function()
+  builtin.diagnostics()
+end)
+
+vim.keymap.set('n', 'sf', function()
+  telescope.extensions.file_browser.file_browser({
+    path = "%:p:h",
+    cwd = telescope_buffer_dir(),
+    respect_gitignore = false,
+    hidden = true,
+    grouped = true,
+    previewer = false,
+    initial_mode = "normal",
+    layout_config = { height = 40 }
+  })
+end)
+```
+
+### /after/plugin/bufferline.rc.lua: 更好看的标签栏
+
+```lua
+local status, bufferline = pcall(require, "bufferline")
+if (not status) then return end
+
+bufferline.setup({
+  options = {
+    mode = "tabs",
+    separator_style = 'slant',
+    always_show_bufferline = false,
+    show_buffer_close_icons = false,
+    show_close_icon = false,
+    color_icons = true
+  },
+  highlights = {
+    separator = {
+      fg = '#073642',
+      bg = '#002b36',
+    },
+    separator_selected = {
+      fg = '#073642',
+    },
+    background = {
+      fg = '#657b83',
+      bg = '#002b36'
+    },
+    buffer_selected = {
+      fg = '#fdf6e3',
+      bold = true,
+    },
+    fill = {
+      bg = '#073642'
+    }
+  },
+})
+
+vim.keymap.set('n', '<Tab>', '<Cmd>BufferLineCycleNext<CR>', {})
+vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferLineCyclePrev<CR>', {})
+```
+
+### /plugin/lspsaga.rc.lua: LSP UI
+
+- `Ctrl+j`: 跳转到提示处
+- `K`: 显示浮动文档
+- `gd`: 查找定义
+- `gp`: 预览定义
+- `gr`: 变量重命名
+
+```lua
+local status, saga = pcall(require, "lspsaga")
+if (not status) then return end
+
+saga.init_lsp_saga {
+  server_filetype_map = {
+    typescript = 'typescript'
+  }
+}
+
+local opts = { noremap = true, silent = true }
+vim.keymap.set('n', '<C-j>', '<Cmd>Lspsaga diagnostic_jump_next<CR>', opts)
+vim.keymap.set('n', 'K', '<Cmd>Lspsaga hover_doc<CR>', opts)
+vim.keymap.set('n', 'gd', '<Cmd>Lspsaga lsp_finder<CR>', opts)
+-- deprecated
+-- vim.keymap.set('i', '<C-k>', '<Cmd>Lspsaga signature_help<CR>', opts)
+vim.keymap.set('n', 'gp', '<Cmd>Lspsaga peek_definition<CR>', opts)
+vim.keymap.set('n', 'gr', '<Cmd>Lspsaga rename<CR>', opts)
+```
+
+### plugin/null-ls.rc.lua: 使用 Neovim 作为语言服务器，通过 Lua 注入 LSP 诊断、代码操作等
+
+- 事先手动安装[eslint_d](https://github.com/mantoni/eslint_d.js)
+
+```lua
+local status, null_ls = pcall(require, "null-ls")
+if (not status) then return end
+
+local augroup_format = vim.api.nvim_create_augroup("Format", { clear = true })
+
+null_ls.setup ({
+  sources = {
+    null_ls.builtins.diagnostics.eslint_d.with({
+      diagnostics_format = '[eslint] #{m}\n(#{c})'
+    }),
+    null_ls.builtins.diagnostics.fish
+  },
+  on_attach = function(client, bufnr)
+    if client.server_capabilities.documentFormattingProvider then
+      vim.api.nvim_clear_autocmds { buffer = 0, group = augroup_format }
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = augroup_format,
+        buffer = 0,
+        callback = function() vim.lsp.buf.formatting_seq_sync() end
+      })
+    end
+  end,
+})
+```
+
+### after/plugin/prettier.rc.lua: 代码格式化
+
+- 事先手动安装[prettierd](phttps://github.com/fsouza/prettier)
+
+```lua
+local status, prettier = pcall(require, "prettier")
+if (not status) then return end
+
+prettier.setup {
+  bin = 'prettierd',
+  filetypes = {
+    "css",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "scss",
+    "less"
+  }
+}
+```
+
+### after/plugin/gitsigns.rc.lua: 在缓冲区显示哪些行被修改
+
+### after/plugin/git.rc.lua: git 相关功能
+
+```lua
+local status, git = pcall(require, "git")
+if (not status) then return end
+
+git.setup({
+  keymaps = {
+    -- Open blame window
+    blame = "<Leader>gb",
+    -- Open file/folder in git repository
+    browse = "<Leader>go",
+  }
+})
+```
+
+### after/plugin/mason.rc.lua: 便携的 Neovim 包管理，管理 Lsp，还为 Lsp 提供额外的特定语言支持（比如 TailwindCSS）
+
+- mason-lspconfig: mason 专属的 lsp 快捷配置
+
+```lua
+local status, mason = pcall(require, "mason")
+if (not status) then return end
+local status2, lspconfig = pcall(require, "mason-lspconfig")
+if (not status2) then return end
+
+mason.setup {}
+
+
+lspconfig.setup {
+  ensure_installed = { "sumneko_lua", "tailwindcss" },
+}
+```
+
+### after/plugin/nvim-comment.rc.lua: 快捷注释
+
+- `gcc`: 注释当前行
+- `gc`: 可视模式下注释所选内容所在行
+- `gc{count}{motion}`：通用模式，如
+  - `gcip`: 注释整段 -`gc4j`: 注释下面 4 行
+
+### after/plugin/nvim-colorizer.rc.lua: RGB 预览
+
+- 需要用命令启用`:ColorizerToggle`
