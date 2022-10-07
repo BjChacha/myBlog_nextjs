@@ -89,9 +89,6 @@ vim.opt.expandtab = true
 -- 光标上下两侧最少保留的屏幕行数
 vim.opt.scrolloff = 10
 
--- 使用!和:!命令的shell名，windows这里用默认的(`cmd.exe`)就行
--- vim.opt.shell = 'fish'
-
 -- 匹配模式则不会建立备份
 vim.opt.backupskip = '/tmp/*./private/tmp/*'
 
@@ -114,16 +111,8 @@ vim.opt.breakindent = true
 -- Tab代表的空格数
 vim.opt.tabstop = 2
 
--- 这两个应该跟上面两个设置重复了
--- vim.opt.ai = true -- Auto indent
--- vim.opt.si = true -- Smart indent
-
 -- 不自动换行（不改变缓冲区里的文本）
-vim.opt.wrap = false -- No wrap lines
-
--- 允许退格的位置：在插入开始的位置上、在换行符上、在自动缩进上
--- 似乎是针对MacOS的
--- vim.opt.backspace = 'start,eol,indent'
+vim.opt.wrap = false
 
 -- 添加当前目录下的所有子目录到path路径中
 vim.opt.path:append { '**' } -- Finding files - Search down into subfloders
@@ -132,19 +121,16 @@ vim.opt.path:append { '**' } -- Finding files - Search down into subfloders
 vim.opt.wildignore:append { '*/node_modules/*' }
 
 -- 底色高亮
--- Undercurl
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
 vim.cmd([[let &t_Ce = "\e[4:0m"]])
 
 -- 离开插入模式时，清空剪切板
--- Turn off paste mode when leaving insert
 vim.api.nvim_create_autocmd("InsertLeave", {
   pattern = '*',
   command = "set nopaste"
 })
 
 -- 自动排版模式，在插入模式按回车时，自动插入当前注释前导符
--- Add asterisks in block comments
 vim.opt.formatoptions:append { 'r' }
 ```
 
@@ -186,9 +172,6 @@ keymap.set('n', 'x', '"_x')
 keymap.set('n', '+', '<C-a>')
 keymap.set('n', '-', '<C-x>')
 
--- 使用dw时反向删除单词
--- keymap.set('n', 'dw', 'vb"_d')
-
 -- 使用Ctrl+a全选
 keymap.set('n', '<C-a>', 'gg<S-v>G')
 
@@ -199,10 +182,6 @@ keymap.set('n', 'sv', ':vsplit<Return><C-w>w', { silent = true })
 
 -- 在子窗口之间移动
 keymap.set('n', '<Space>', '<C-w>w')
--- keymap.set('', 's<left>', '<C-w>h')
--- keymap.set('', 's<up>', '<C-w>k')
--- keymap.set('', 's<down>', '<C-w>j')
--- keymap.set('', 's<right>', '<C-w>l')
 keymap.set('', 'sh', '<C-w>h')
 keymap.set('', 'sj', '<C-w>j')
 keymap.set('', 'sk', '<C-w>k')
@@ -235,6 +214,11 @@ packer.startup(function(use)
   -- Packer
   use 'wbthomason/packer.nvim'
 
+  -- 实用工具
+  use 'nvim-lua/plenary.nvim'
+  -- 文件图标
+  use 'kyazdani42/nvim-web-devicons'
+
   -- Neosolarized: 颜色主题管理
   use {
     'svrana/neosolarized.nvim',
@@ -242,10 +226,7 @@ packer.startup(function(use)
   }
 
   -- Lualine: 状态栏
-  use {
-    'hoob3rt/lualine.nvim', -- Statusline
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-  }
+  use 'hoob3rt/lualine.nvim'
 
   -- 类VSCode的图表显示
   use 'onsails/lspkind-nvim' -- vscode-like pictograms
@@ -267,13 +248,60 @@ packer.startup(function(use)
     run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
   }
 
-  -- nvim-lsp-installer: 自动安装nvim支持的lsp安装器
-  -- nvim-lspconfig: 配置lsp
-  -- LSP（Language Server Protocol），用于支持某个语言服务
+  -- nvim-lspconfig: 配置Lsp
+  use 'neovim/nvim-lspconfig'
+
+  -- 自动补全括号
+  use 'windwp/nvim-autopairs'
+  -- 自动补全html标签
+  use 'windwp/nvim-ts-autotag'
+
+  -- 模糊查找器
   use {
-    "williamboman/nvim-lsp-installer",
-    "neovim/nvim-lspconfig",
+    'nvim-telescope/telescope.nvim',
+    'nvim-telescope/telescope-file-browser.nvim',
   }
+
+  -- 更好看的tabs栏
+  use {
+    'akinsho/bufferline.nvim',
+    tag = "v2.*",
+  }
+
+  -- 更好看的LSP UI
+  use({
+    "glepnir/lspsaga.nvim",
+    branch = "main",
+    config = function()
+      local saga = require("lspsaga")
+
+      saga.init_lsp_saga({
+        -- your configuration
+      })
+    end,
+  })
+
+  --
+  use 'jose-elias-alvarez/null-ls.nvim'
+
+  --
+  use 'MunifTanjim/prettier.nvim'
+
+  -- 显示buffer区被修改的行
+  use 'lewis6991/gitsigns.nvim'
+
+  -- git相关
+  use 'dinhhuy258/git.nvim'
+
+  -- mason
+  use 'williamboman/mason.nvim'
+  use 'williamboman/mason-lspconfig.nvim'
+
+  -- 快速注释
+  use 'terrortylor/nvim-comment'
+
+  -- 预览RBG颜色
+  use 'norcalli/nvim-colorizer.lua'
 end)
 ```
 
