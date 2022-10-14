@@ -1,5 +1,5 @@
 ---
-title: '声明式编程 VS 命令式编程'
+title: '声明式编程VS命令式编程'
 date: '2022-10-14'
 # lastmode: '2022-10-06'
 tags: ['log', 'programme']
