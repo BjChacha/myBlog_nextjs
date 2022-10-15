@@ -10,7 +10,7 @@ authors: ['default']
 layout: PostLayout
 ---
 
-<!-- # 将 Neovim 打磨成前端开发利器 -->
+# 将 Neovim 打磨成前端开发利器
 
 - 为什么要用 vim
   - 装逼（最主要目的）

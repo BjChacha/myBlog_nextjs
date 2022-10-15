@@ -10,7 +10,7 @@ authors: ['default']
 layout: PostLayout
 ---
 
-<!-- # 声明式编程 VS 命令式编程 -->
+# 声明式编程 VS 命令式编程
 
 ## 什么是声明式编程/命令式编程
 
